@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { PlanData, DailySchedule, DAYS_OF_WEEK } from '../types';
 import { PlusIcon, TrashIcon, CalendarIcon } from './icons';
+import { IS_TEST_MODE, DUMMY_DATA } from '../constants';
 
 interface PlannerFormProps {
   onSubmit: (data: PlanData) => void;
@@ -9,6 +10,15 @@ interface PlannerFormProps {
 const LOCAL_STORAGE_KEY = 'plannerFormData';
 
 const getInitialData = (): PlanData => {
+    if (IS_TEST_MODE) {
+        // When in test mode, always start with the dummy data.
+        // We ensure each schedule has a unique ID, as DUMMY_DATA is a static object.
+        return {
+            ...DUMMY_DATA,
+            dailySchedules: DUMMY_DATA.dailySchedules.map(s => ({...s, id: crypto.randomUUID()}))
+        };
+    }
+
     try {
         const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (savedData) {
@@ -45,7 +55,10 @@ const PlannerForm: React.FC<PlannerFormProps> = ({ onSubmit }) => {
   const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(formData));
+    // Don't save dummy data to localStorage to avoid overwriting user's actual data
+    if (!IS_TEST_MODE) {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(formData));
+    }
   }, [formData]);
   
   const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
