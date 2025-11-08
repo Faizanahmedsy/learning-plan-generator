@@ -1,0 +1,5 @@
+{
+  "name": "Custom Learning Planner Generator",
+  "description": "An application that allows users to create a detailed, personalized, and printable learning plan, habit tracker, and journal. Users can define their schedule, tasks, and habits, and the app generates a multi-page PDF-ready document.",
+  "requestFramePermissions": []
+}

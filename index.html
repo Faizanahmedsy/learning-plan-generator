@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Learning Planner Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      /* Custom styles for printable pages */
+      .page {
+        width: 8.27in; /* A4 width */
+        min-height: 11.69in; /* A4 height */
+        page-break-after: always;
+        box-sizing: border-box;
+      }
+      .page:last-child {
+        page-break-after: auto;
+      }
+      .lined {
+        background-image: linear-gradient(to bottom, transparent 31px, #e5e7eb 32px);
+        background-size: 100% 32px;
+        line-height: 32px;
+      }
+
+      @media print {
+        body {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .no-print {
+          display: none !important;
+        }
+        .page {
+          margin: 0;
+          padding: 0.5in;
+          border: none;
+          box-shadow: none;
+          width: 100%;
+          min-height: 100%;
+          page-break-before: always;
+        }
+         .page:first-of-type {
+          page-break-before: auto;
+         }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
